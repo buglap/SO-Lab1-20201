@@ -6,21 +6,22 @@ FILE *fp;
 void file_printer(char *filename);
 
 int main(int argc, char *argv[]) {
-	if(argc!=2){
-		exit(1);
+	//if(argc!=2){
+	//	exit(1);
+	//}
+	int count = 0; 
+	while(argv[++count] != NULL){
+	    file_printer(argv[count]);
 	}
-	while( *(++argv) ){
-	    file_printer(*argv);
-	}		
 	return 0;
 }
-
 
 void file_printer(char *filename){
 	char buff[255];
 	FILE *fp = fopen(filename,"r");
 	if(fp == NULL){
-		printf("archivo vacio");
+		printf("wcat: cannot open file\n");
+		    exit(1);
 	}
 	else{
 		while(fgets(buff,255,fp) != NULL){
@@ -28,5 +29,4 @@ void file_printer(char *filename){
 		}
 		fclose(fp);
 	}
-	exit(1);
 }
