@@ -43,19 +43,28 @@ int main(int argc,char *argv[]){
 		exit(1);
 	}
 	if(argc >= 2){ 
-		for(int l=1; l<argc; l++){
-			if(argc==2||l==1){
-				string = read_file(argv[1]);
-			}else{
-				str = read_file(argv[l]);
-			        char temp[strlen(str)+strlen(string)+1];
-				strcpy(temp, string);
-				strcat(temp, str);
-				string = temp;
-			}
-			l++;
+		if(argc ==2){
+			str = read_file(argv[1]);
+			make_zip(str);
+			return 0;
 		}
-		make_zip(string);
+		string = read_file(argv[1]);
+		char *str2 =  read_file(argv[2]);
+		if(argc == 3){
+			str = (char*)malloc((1+ strlen(string) + strlen(str2)));
+			strcpy(str, string);
+			strcat(str, str2);
+			make_zip(str);
+			return 0;
+		}else if(argc == 4){
+			char *str3 = read_file(argv[3]);
+			str = (char*)malloc((1+ strlen(string) +strlen(str3)+ strlen(str2)));
+			strcpy(str, string);
+			strcat(str,str2);
+			strcat(str, str3);
+			make_zip(str);
+			return 0;
+		}
 	}
 	return 0;
 }
@@ -69,8 +78,6 @@ void make_zip(char *string){
 				count++;
 			}
 			else if(str[i]!=str[i+1]){
-				//printf("%d",count);
-				//printf("%c",str[i]);
 				fwrite(&count, 1, sizeof(count), stdout);
 				fwrite(&str[i], 1, 1, stdout);
 				count = 1;
