@@ -14,17 +14,14 @@ int main(int argc,char *argv[]){
 			printf("wunzip: cannot open file\n");
 			exit(1);
 		}
-		//int counter = 1;
-		char ca = fgetc(fp);
+		int n_char;
 		char c;
-		while(ca != EOF){
-			c = fgetc(fp);
-			c = fgetc(fp);
-			c = fgetc(fp); 
-			c = fgetc(fp); 
-		       	for (int i = 0; i < ca; i++){                                                                                                                                                   printf("%c", c);                                                                                                                                                }
-			ca =fgetc(fp);			
-		}
+		while (fread(&n_char, 4, 1, fp)) { 
+				fread(&c, 1, 1, fp);  
+				for(int i=0;i<n_char;i++){
+					printf("%c", c); 
+				} 
+			}
 		fclose(fp);
 	}
 	return 0;
